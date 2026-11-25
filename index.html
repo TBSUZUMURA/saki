@@ -138,8 +138,18 @@ video.video{display:block;aspect-ratio:1080/1812;width:100%;max-width:min(460px,
 .hm-dock{margin-top:auto;display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
 .hm-dock div{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:9px;color:var(--muted);text-align:center;line-height:1.2}
 .hm-dock i{width:38px;height:38px;border-radius:12px;background:linear-gradient(150deg,rgba(255,255,255,.14),rgba(255,255,255,.04));border:1px solid var(--line);display:grid;place-items:center;font-style:normal;font-size:13px;color:var(--gold)}
-.hm-rec{align-self:center;width:46px;height:46px;border-radius:50%;border:1px solid var(--gold-soft);display:grid;place-items:center}
-.hm-rec i{width:14px;height:14px;border-radius:50%;background:#d0574e}
+.hm-el{text-align:center;padding:2px 0 4px}
+.hm-el .nm{font-size:12px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hm-el .l{display:flex;justify-content:center;align-items:flex-end;gap:6px;margin-top:2px}
+.hm-el .l span{font-size:10.5px;color:var(--muted);padding-bottom:6px}
+.hm-el .l b{font:200 40px/1 var(--f-num);color:var(--text);font-variant-numeric:tabular-nums}
+.hm-el .bar{display:flex;align-items:center;gap:8px;margin-top:6px;font:500 10px var(--f-num);color:var(--gold)}
+.hm-el .bar i{flex:1;position:relative;height:3px;border-radius:3px;background:var(--line)}
+.hm-el .bar u{position:absolute;left:0;top:0;bottom:0;border-radius:3px;background:var(--gold)}
+.hm-el .bar u::after{content:"";position:absolute;right:-5px;top:50%;width:10px;height:10px;margin-top:-5px;border-radius:50%;background:var(--gold)}
+.hm-el .s{font-size:9.5px;color:var(--faint);margin-top:3px}
+.hm-rec{align-self:center;flex:none;width:36px;height:36px;border-radius:50%;border:1px solid var(--gold-soft);display:grid;place-items:center}
+.hm-rec i{width:12px;height:12px;border-radius:50%;background:#d0574e}
 /* 見えたら静かに浮かび上がる */
 .js .rv{opacity:0;transform:translateY(16px);transition:opacity .9s ease, transform .9s cubic-bezier(.2,.7,.2,1)}
 .js .rv.in{opacity:1;transform:none}
@@ -486,7 +496,7 @@ footer{margin-top:72px;padding-top:24px;border-top:1px solid var(--line);display
       <div class="steps-col">
         <div class="step" data-s="morning"><span class="t">07:40</span><h3>朝の準備</h3><p>最初の予定までの時間と、今日の予定。</p><div class="mini"></div></div>
         <div class="step" data-s="commute"><span class="t">08:32</span><h3>移動中</h3><p>次の予定と、乗ってからの時間。</p><div class="mini"></div></div>
-        <div class="step" data-s="meeting"><span class="t">10:12</span><h3>会議中</h3><p>通知を預かり、終わったらまとめて知らせる。</p><div class="mini"></div></div>
+        <div class="step" data-s="meeting"><span class="t">10:20</span><h3>会議中</h3><p>通知を預かり、終わったらまとめて知らせる。</p><div class="mini"></div></div>
         <div class="step" data-s="gap"><span class="t">13:50</span><h3>すき間時間</h3><p>空き時間と、今のうちにできる「やること」。</p><div class="mini"></div></div>
         <div class="step" data-s="evening"><span class="t">18:10</span><h3>仕事おわり</h3><p>今日の流れと、明日の予定。</p><div class="mini"></div></div>
       </div>
@@ -863,15 +873,13 @@ footer{margin-top:72px;padding-top:24px;border-top:1px solid var(--line);display
       blocks:[['head',DATE,'おはようございます'],['num','最初の予定','10:00','','あと 2 時間 20 分','チームの定例 ・ 本社 3F 会議室','予定を見る'],['tl','今日の予定',[['10:00','チームの定例'],...AFTER]]]},
     commute:{clock:'08:32',label:'移動中',glow:'#4d6fa8',dock:['乗換案内','ニュース','チャット','音楽'],why:'乗り物に乗っています（体の動きから判断）',
       blocks:[['head',DATE,'移動中'],['num','次の予定','10:00','','あと 1 時間 28 分','チームの定例 ・ 本社 3F 会議室','予定を見る'],['line','乗ってから 12 分'],['tl','そのあとの予定',AFTER]]},
-    meeting:{clock:'10:12',label:'会議中',glow:'#5e4f9e',dock:['メモ','ビデオ会議','ファイル','録音'],why:'予定「チームの定例」（10:00〜11:00）の最中です',
-      blocks:[['el','チームの定例','開始からの経過\n11:00 まで'],['bul','通知を 6 件預かり中','終わったらまとめて',[['山本さん（チャット）','2 件'],['総務（メール）','2 件'],['佐々木さん（チャット）','2 件']]],['line','場所：本社 3F 会議室'],['rec']]},
+    meeting:{clock:'10:20',label:'会議中',glow:'#5e4f9e',dock:['メモ','ビデオ会議','ファイル','録音'],why:'予定「チームの定例」（10:00〜11:00）の最中です',
+      blocks:[['el','チームの定例 ・ 本社 3F 会議室','10:00','11:00',40,20],['bul','通知を 6 件預かり中','終わったらまとめて',[['山本さん（チャット）','2 件'],['総務（メール）','2 件'],['佐々木さん（チャット）','2 件']]],['tl','このあとの予定',[['15:00','東和ビルで打ち合わせ'],['15:30','部の月例会（15:00 と重なり）']]]]},
     gap:{clock:'13:50',label:'すき間時間',glow:'#3f8c80',dock:['経費精算','メール','チャット','やること'],why:'次の予定「東和ビルで打ち合わせ」（15:00）まで 70 分あります',
       blocks:[['num','次の予定まで','70','分','15:00\n東和ビルで打ち合わせ','',''],['bul','今のうちに片づけられること','',[['見積書の資料を用意','今日 15:00 まで'],['議事録をチームに共有する','今日まで'],['先週の交通費を申請する','明日まで']]]]},
     evening:{clock:'18:10',label:'仕事おわり',glow:'#b8694c',dock:['勤怠','乗換案内','マップ','音楽'],why:'いつもの終業 18:00 を過ぎました',
       blocks:[['head',MD+'の振り返り','おつかれさまでした'],['flow','今日の流れ',[['07:41','連絡から予定を見つけた'],['10:00','会議中、通知を 6 件預かった'],['13:52','写真から予定を見つけた'],['14:30','出発を知らせた']]],['tl','明日の予定',[['09:30','取引先で打ち合わせ'],['13:00','部の勉強会']]]]},
   };
-  let elapsed=12*60+30;
-  const fmtEl=()=>`${String(Math.floor(elapsed/60)).padStart(2,'0')}:${String(elapsed%60).padStart(2,'0')}`;
   function block(b){
     const rows=(list,cls='')=>list.map(([a,c,d])=>`<div class="hm-row ${cls}"><span class="tm">${esc(a)}</span><span>${esc(c)}</span><span class="sd">${esc(d||'')}</span></div>`).join('');
     switch(b[0]){
@@ -880,7 +888,9 @@ footer{margin-top:72px;padding-top:24px;border-top:1px solid var(--line);display
       case 'tl': return `<div class="hm-card"><div class="e">${esc(b[1])}</div>${rows(b[2])}</div>`;
       case 'flow': return `<div class="hm-card"><div class="e">${esc(b[1])}<span>つながりで表示</span></div>${rows(b[2],'flow')}</div>`;
       case 'bul': return `<div class="hm-card"><div class="e">${esc(b[1])}${b[2]?`<span>${esc(b[2])}</span>`:''}</div>${b[3].map(([a,c])=>`<div class="hm-row" style="grid-template-columns:1fr auto"><span>${esc(a)}</span><span class="sd">${esc(c)}</span></div>`).join('')}</div>`;
-      case 'el': return `<div class="hm-card"><div class="e">${esc(b[1])}</div><div class="hm-num"><b data-el>${fmtEl()}</b><span>${esc(b[2])}</span></div></div>`;
+      // 会議中：終わりまでの残りを大きく、開始〜終了のどこにいるかを棒で(アプリと同じ)
+      case 'el': return `<div class="hm-el"><div class="nm">${esc(b[1])}</div><div class="l"><span>終わりまで あと</span><b>${b[4]}</b><span>分</span></div>`+
+        `<div class="bar"><span>${esc(b[2])}</span><i><u style="width:${b[5]/(b[4]+b[5])*100}%"></u></i><span>${esc(b[3])}</span></div><div class="s">開始から ${b[5]} 分</div></div>`;
       case 'line': return `<div class="hm-line">${esc(b[1])}</div>`;
       case 'rec': return `<div class="hm-rec" title="録音"><i></i></div>`;
     }
@@ -948,8 +958,6 @@ footer{margin-top:72px;padding-top:24px;border-top:1px solid var(--line);display
   window.addEventListener('scroll',()=>{ if(!ticking){ ticking=true; requestAnimationFrame(pick); } },{passive:true});
   window.addEventListener('resize',pick);
   pick();
-  // 会議中の経過時間を進める
-  setInterval(()=>{ elapsed++; document.querySelectorAll('[data-el]').forEach(e=>e.textContent=fmtEl()); },1000);
 
   // 見えたら静かに浮かび上がる(ヒーローは最初から出す)
   const targets=[...document.querySelectorAll('section .eyebrow, section .demo-tag, section h2, section .lead, .calc, .spec, .tryin, #try .phone')];
