@@ -159,6 +159,50 @@ video.video{display:block;aspect-ratio:1080/1812;width:100%;max-width:min(460px,
 }
 
 .dbody{overflow:hidden}
+/* 状況ごとの画面：中身が長いときは、下段のアプリは止めたまま中身だけゆっくり送る(アプリの自動送りと同じ) */
+.dscroll{flex:1;min-height:0;overflow:hidden;position:relative}
+.dsin{display:flex;flex-direction:column;gap:10px}
+.dsin.go{animation:dsc var(--t,10s) ease-in-out 1.2s infinite alternate}
+@keyframes dsc{0%,12%{transform:none}88%,100%{transform:translateY(var(--d,0px))}}
+@media (prefers-reduced-motion:reduce){.dsin.go{animation:none}.dscroll{overflow-y:auto}}
+.hm-card.hot{border-color:var(--gold-soft)}
+.hm-xl{display:flex;align-items:flex-end;justify-content:space-between;gap:8px;padding:2px 2px 0}
+.hm-xl .e{font-size:9.5px;letter-spacing:.12em;color:var(--gold)}
+.hm-xl b{font:200 52px/1 var(--f-num);font-variant-numeric:tabular-nums}
+.hm-xl b small{font-size:14px;margin-left:3px;color:var(--muted)}
+.hm-xl span{font-size:10.5px;color:var(--muted);text-align:right;line-height:1.45;white-space:pre-line}
+.hm-fn{display:flex;gap:12px;margin:6px 0 4px}
+.hm-fn div{display:flex;flex-direction:column;white-space:nowrap;font-size:9.5px;color:var(--muted);line-height:1.3}
+.hm-fn b{font:200 24px/1 var(--f-num);color:var(--text)}
+.hm-fn b small{font:400 10px var(--f-text);color:var(--muted);margin-left:2px}
+.hm-fl{margin-top:4px}
+.hm-fl .r{position:relative;display:grid;grid-template-columns:14px 34px 1fr;gap:4px;font-size:10.5px;line-height:1.45;padding-bottom:6px}
+.hm-fl .r:last-child{padding-bottom:0}
+.hm-fl .r::before{content:"";position:absolute;left:6.5px;top:9px;bottom:-3px;width:1px;background:var(--gold-soft)}
+.hm-fl .r:last-child::before{display:none}
+.hm-fl i{width:7px;height:7px;margin:4px 0 0 3px;border-radius:50%;border:1.5px solid var(--gold);box-sizing:border-box}
+.hm-fl i.f{background:var(--gold)}
+.hm-fl .tm{color:var(--gold);font-family:var(--f-num);font-variant-numeric:tabular-nums}
+.hm-fl em{display:inline-block;font-style:normal;font-size:9px;color:var(--gold);border:1px solid var(--gold-soft);border-radius:999px;padding:0 6px;margin-top:2px}
+.hm-back{display:flex;align-items:center;justify-content:space-between;gap:6px;font-size:9.5px;color:var(--faint)}
+.hm-back em,.hm-ghost{font-style:normal;font-size:9.5px;padding:1px 8px;border-radius:999px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.hm-dec{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:8px;margin-top:4px;font-size:11px;line-height:1.4}
+.hm-dec b{font:200 22px/1 var(--f-num)}
+.hm-dec > div{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hm-dec small{display:block;font-size:9.5px;color:var(--faint);overflow:hidden;text-overflow:ellipsis}
+.hm-dec .act{margin-top:0;white-space:nowrap}
+.hm-td{display:grid;grid-template-columns:11px 1fr auto;align-items:center;gap:7px;padding-top:6px;font-size:10.5px;line-height:1.4}
+.hm-td i{width:11px;height:11px;border-radius:3px;border:1px solid var(--gold-soft);box-sizing:border-box}
+.hm-td i.on{background:var(--gold);border-color:var(--gold)}
+.hm-td small{display:block;font-size:9px;color:var(--gold)}
+.hm-td .hm-ghost{border-color:var(--gold-soft);color:var(--gold)}
+.hm-note{font-size:9px;color:var(--faint);margin-top:6px}
+.hm-btns{display:flex;gap:6px}
+.hm-btns .act{margin-top:0}
+.hm-two{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.hm-two .hm-card{padding:7px 9px;font-size:9px;color:var(--faint);line-height:1.4}
+.hm-two .hm-card .e{margin-bottom:1px}
+.hm-two b{display:block;font:300 17px/1.2 var(--f-num);color:var(--text)}
 /* ページの背景の光：読んでいる場所に合わせて色が変わる(スマホのホームと同じ考え方) */
 .bgfx{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
 .bgfx i{position:absolute;border-radius:50%;-webkit-mask-image:radial-gradient(closest-side,#000 0%,rgba(0,0,0,.45) 45%,transparent 100%);mask-image:radial-gradient(closest-side,#000 0%,rgba(0,0,0,.45) 45%,transparent 100%);transition:background-color 1.8s ease}
@@ -491,12 +535,13 @@ footer{margin-top:72px;padding-top:24px;border-top:1px solid var(--line);display
   <section id="day">
     <div class="eyebrow">1 日の利用イメージ</div>
     <h2>状況に応じて、ホーム画面が切り替わる</h2>
-    <p class="lead">5 つの状況に合わせて、ホーム画面と下段の 4 つのアプリが自動で切り替わります。</p>
+    <p class="lead">6 つの状況に合わせて、ホーム画面と下段の 4 つのアプリが自動で切り替わります。</p>
     <div class="story">
       <div class="steps-col">
         <div class="step" data-s="morning"><span class="t">07:40</span><h3>朝の準備</h3><p>最初の予定までの時間と、今日の予定。</p><div class="mini"></div></div>
         <div class="step" data-s="commute"><span class="t">08:32</span><h3>移動中</h3><p>次の予定と、乗ってからの時間。</p><div class="mini"></div></div>
         <div class="step" data-s="meeting"><span class="t">10:20</span><h3>会議中</h3><p>通知を預かり、終わったらまとめて知らせる。</p><div class="mini"></div></div>
+        <div class="step" data-s="aftermeet"><span class="t">11:04</span><h3>会議おわり</h3><p>決まった予定とやることを、その場で入れる。</p><div class="mini"></div></div>
         <div class="step" data-s="gap"><span class="t">13:50</span><h3>すき間時間</h3><p>空き時間と、今のうちにできる「やること」。</p><div class="mini"></div></div>
         <div class="step" data-s="evening"><span class="t">18:10</span><h3>仕事おわり</h3><p>今日の流れと、明日の予定。</p><div class="mini"></div></div>
       </div>
@@ -508,6 +553,7 @@ footer{margin-top:72px;padding-top:24px;border-top:1px solid var(--line);display
       <li><b>朝の準備</b>：始業前（始業時刻は利用状況から学習）。天気・乗換案内・メール・カレンダーを下段に配置</li>
       <li><b>移動中</b>：乗り物への乗車を行動認識で検知（位置情報は不使用）。登録した車の Bluetooth に接続すると、地図・音楽・電話に切り替え</li>
       <li><b>会議中</b>：カレンダー上の会議の開催中（空き時間・欠席・中止は対象外）。保留しない相手は利用者が指定でき、録音もワンタップで開始</li>
+      <li><b>会議おわり</b>：会議の録音を止め、文字起こしが終わってから 15 分間。決まった予定はカレンダーに、やることの候補は担当者・期限つきで、その場で登録できます</li>
       <li><b>すき間時間</b>：次の予定まで 30〜90 分の空きがある。「やること」は期限の近い順</li>
       <li><b>仕事おわり</b>：通常の終業時刻を経過（利用状況から学習）</li>
       <li><b>通知</b>：場所のある予定は出発の 30 分前（飛行機は 90 分前）、Zoom・Teams・Meet の会議は 5 分前、やることは期限の前日と当日の朝に知らせます。会議中に届いた通知は保留し、終了後に一度だけまとめて知らせます（指定した相手は保留しません）</li>
@@ -730,7 +776,7 @@ footer{margin-top:72px;padding-top:24px;border-top:1px solid var(--line);display
       <div><dt>動作環境</dt><dd>Android 12 以降（ホームアプリとして設定して使用）</dd></div>
       <div><dt>動作確認機種</dt><dd>Galaxy Z Fold8<small>端末の AI 機能や高い処理性能に依存しない設計のため、社用スマホに多い低価格な機種でも動作するよう開発しています。</small></dd></div>
       <div><dt>使用技術</dt><dd>Kotlin ・ Jetpack Compose ・ Google ML Kit（エンティティ抽出・日本語テキスト認識）・ Google 行動認識 API ・ Android のカレンダー／通知へのアクセス／使用状況</dd></div>
-      <div><dt>実装済みの機能</dt><dd>状況に応じたホーム画面の切り替え（朝・移動中・会議中・すき間時間・仕事おわり）と判断根拠の表示<br>通知・共有・写真からの予定カード作成（種類の判別、中止・変更・日程調整・辞退、複数の予定）<br>出発 30 分前・オンライン会議 5 分前の事前通知<br>会議中の通知の保留とまとめ通知<br>会議の録音と、録音しながらの端末内の文字起こし（外部に送信しない）<br>文字起こしからの会議のまとめ（決まった予定、やることの候補と担当者・期限）と「会議おわり」のホーム画面<br>音声・動画ファイルからの文字起こし、全文のテキスト保存・共有、録音の整理<br>やることの期限と期限前の通知、「今日の流れ」（SAKI が先回りした出来事の振り返り）<br>移動中の判別（乗り物・車の Bluetooth）<br>利用傾向の学習と「覚えたこと」画面<br>ウィジェット・ホーム・アプリの 3 画面構成、フォルダ、通知件数の表示、全アプリ一覧、下段アプリの入れ替え、撮影用のデモモード
+      <div><dt>実装済みの機能</dt><dd>状況に応じたホーム画面の切り替え（朝・移動中・会議中・会議おわり・すき間時間・仕事おわり）と判断根拠の表示<br>通知・共有・写真からの予定カード作成（種類の判別、中止・変更・日程調整・辞退、複数の予定）<br>出発 30 分前・オンライン会議 5 分前の事前通知<br>会議中の通知の保留とまとめ通知<br>会議の録音と、録音しながらの端末内の文字起こし（外部に送信しない）<br>文字起こしからの会議のまとめ（決まった予定、やることの候補と担当者・期限）と「会議おわり」のホーム画面<br>音声・動画ファイルからの文字起こし、全文のテキスト保存・共有、録音の整理<br>やることの期限と期限前の通知、「今日の流れ」（SAKI が先回りした出来事の振り返り）<br>移動中の判別（乗り物・車の Bluetooth）<br>利用傾向の学習と「覚えたこと」画面<br>ウィジェット・ホーム・アプリの 3 画面構成、フォルダ、通知件数の表示、全アプリ一覧、下段アプリの入れ替え、撮影用のデモモード
         <small>解析・判断ロジックの自動テスト 100 件以上。実機で実際の連絡や写真を用いて検証し、誤読を順次修正しています。</small></dd></div>
       <div><dt>今後の予定</dt><dd>メール本文中の日時の解析（Outlook 連携）、実利用による削減時間の測定</dd></div>
     </dl>
@@ -866,19 +912,25 @@ footer{margin-top:72px;padding-top:24px;border-top:1px solid var(--line);display
   const now=new Date(); const DOW='日月火水木金土';
   const DATE=`${now.getMonth()+1}月${now.getDate()}日 ${DOW[now.getDay()]}曜日`;
   const MD=`${now.getMonth()+1}月${now.getDate()}日`;
-  const AFTER=[['15:00','東和ビルで打ち合わせ'],['15:30','部の月例会']];
+  const AFTER=[['15:00','東和ビルで打ち合わせ'],['15:30','部の月例会（15:00 と重なり）']];
+  // 会議おわり：次回の定例は来週の同じ曜日、見積書は来週の金曜
+  const MDE=d=>`${d.getMonth()+1}/${d.getDate()}(${DOW[d.getDay()]})`;
+  const NEXTW=new Date(now.getFullYear(),now.getMonth(),now.getDate()+7);
+  const FRI=new Date(NEXTW.getFullYear(),NEXTW.getMonth(),NEXTW.getDate()+5-(NEXTW.getDay()||7));
   // アプリの台本(DemoScript)と同じ中身
   const S={
     morning:{clock:'07:40',label:'朝の準備',glow:'#c98f4e',dock:['天気','乗換案内','メール','カレンダー'],why:'いつもの始業 9:00 より前です',
-      blocks:[['head',DATE,'おはようございます'],['num','最初の予定','10:00','','あと 2 時間 20 分','チームの定例 ・ 本社 3F 会議室','予定を見る'],['tl','今日の予定',[['10:00','チームの定例'],...AFTER]]]},
+      blocks:[['head',DATE,'おはようございます'],['num','最初の予定','10:00','','あと 2 時間 20 分','チームの定例 ・ 本社 3F 会議室','予定を見る'],['tl','今日の予定',[['10:00','チームの定例'],['15:30','部の月例会']]]]},
     commute:{clock:'08:32',label:'移動中',glow:'#4d6fa8',dock:['乗換案内','ニュース','チャット','音楽'],why:'乗り物に乗っています（体の動きから判断）',
       blocks:[['head',DATE,'移動中'],['num','次の予定','10:00','','あと 1 時間 28 分','チームの定例 ・ 本社 3F 会議室','予定を見る'],['line','乗ってから 12 分'],['tl','そのあとの予定',AFTER]]},
     meeting:{clock:'10:20',label:'会議中',glow:'#5e4f9e',dock:['メモ','ビデオ会議','ファイル','録音'],why:'予定「チームの定例」（10:00〜11:00）の最中です',
       blocks:[['el','チームの定例 ・ 本社 3F 会議室','10:00','11:00',40,20],['bul','通知を 6 件預かり中','終わったらまとめて',[['山本さん（チャット）','2 件'],['総務（メール）','2 件'],['佐々木さん（チャット）','2 件']]],['tl','このあとの予定',[['15:00','東和ビルで打ち合わせ'],['15:30','部の月例会（15:00 と重なり）']]]]},
     gap:{clock:'13:50',label:'すき間時間',glow:'#3f8c80',dock:['経費精算','メール','チャット','やること'],why:'次の予定「東和ビルで打ち合わせ」（15:00）まで 70 分あります',
-      blocks:[['num','次の予定まで','70','分','15:00\n東和ビルで打ち合わせ','',''],['bul','今のうちに片づけられること','',[['見積書の資料を用意','今日 15:00 まで'],['議事録をチームに共有する','今日まで'],['先週の交通費を申請する','明日まで']]]]},
+      blocks:[['xl','次の予定まで','70','分','15:00\n東和ビルで打ち合わせ'],['bul','今のうちに片づけられること','',[['見積書の資料を用意（東和ビルで打ち合わせ）','今日 15:00 まで'],['部の月例会に欠席の連絡（15:00 の打ち合わせと重なり）','今日 15:30 まで'],['議事録をチームに共有する（11:02 の会議から）','今日まで']]]]},
+    aftermeet:{clock:'11:04',label:'会議おわり',glow:'#c99a58',dock:['メール','チャット','カレンダー','やること'],why:'会議の録音から予定とやることをまとめました。議事録を送る・予定を入れるアプリです',
+      blocks:[['head','11:02 に録音を止めました ・ 62 分','チームの定例、おつかれさまでした'],['mend']]},
     evening:{clock:'18:10',label:'仕事おわり',glow:'#b8694c',dock:['勤怠','乗換案内','マップ','音楽'],why:'いつもの終業 18:00 を過ぎました',
-      blocks:[['head',MD+'の振り返り','おつかれさまでした'],['flow','今日の流れ',[['07:41','連絡から予定を見つけた'],['10:00','会議中、通知を 6 件預かった'],['13:52','写真から予定を見つけた'],['14:30','出発を知らせた']]],['tl','明日の予定',[['09:30','取引先で打ち合わせ'],['13:00','部の勉強会']]]]},
+      blocks:[['head',MD+'の振り返り','おつかれさまでした'],['flow',[['07:41','連絡から予定を見つけた',1],['11:02','会議をまとめた',1],['11:05','やることに足した',0,'← 11:02 の会議から'],['13:52','写真から予定を見つけた',1],['14:30','出発を知らせた',1,'← 07:41 に見つけた予定']]],['tl','明日の予定',[['09:30','取引先で打ち合わせ'],['13:00','部の勉強会'],['17:00','見積の締め切り']]]]},
   };
   function block(b){
     const rows=(list,cls='')=>list.map(([a,c,d])=>`<div class="hm-row ${cls}"><span class="tm">${esc(a)}</span><span>${esc(c)}</span><span class="sd">${esc(d||'')}</span></div>`).join('');
@@ -886,7 +938,22 @@ footer{margin-top:72px;padding-top:24px;border-top:1px solid var(--line);display
       case 'head': return `<div class="hm-head"><div class="e">${esc(b[1])}</div><div class="h">${esc(b[2])}</div></div>`;
       case 'num': return `<div class="hm-card"><div class="e">${esc(b[1])}</div><div class="hm-num"><b>${esc(b[2])}${b[3]?`<small>${esc(b[3])}</small>`:''}</b><span>${esc(b[4])}</span></div>${b[5]?`<div class="note">${esc(b[5])}</div>`:''}${b[6]?`<span class="act">${esc(b[6])}</span>`:''}</div>`;
       case 'tl': return `<div class="hm-card"><div class="e">${esc(b[1])}</div>${rows(b[2])}</div>`;
-      case 'flow': return `<div class="hm-card"><div class="e">${esc(b[1])}<span>つながりで表示</span></div>${rows(b[2],'flow')}</div>`;
+      case 'xl': return `<div class="hm-xl"><div><div class="e">${esc(b[1])}</div><b>${esc(b[2])}<small>${esc(b[3])}</small></b></div><span>${esc(b[4])}</span></div>`;
+      // 今日の流れ：先回りの回数・浮いた時間・つながった流れと、代表 5 件(点を塗る=SAKI がした、輪=利用者が足した)
+      case 'flow': return `<div class="hm-card hot"><div class="e">今日の流れ<span>SAKI が先回りしたこと</span></div>`+
+        `<div class="hm-fn"><div><b>5<small>回</small></b>先回り</div><div><b>38<small>分</small></b>浮いた時間の目安</div><div><b>2<small>本</small></b>つながった流れ</div></div>`+
+        `<div class="hm-fl">${b[1].map(([t,x,f,from])=>`<div class="r"><i class="${f?'f':''}"></i><span class="tm">${t}</span><div>${esc(x)}${from?`<br><em>${esc(from)}</em>`:''}</div></div>`).join('')}</div>`+
+        `<span class="act">今日の流れを全部見る（9 件）</span></div>`;
+      // 会議おわり：決まった予定・やること(誰が・いつまで)・預かった通知・次の予定
+      case 'mend': return `<div class="hm-back"><span>あと 13 分でふだんのホームに戻ります</span><em>今すぐ戻す</em></div>`+
+        `<div class="hm-card hot"><div class="e">決まった予定<span>会議の録音から</span></div><div class="hm-dec"><b>10:00</b><div>次回のチームの定例<small>${MDE(NEXTW)} ・ 本社 3F 会議室</small></div><span class="act">カレンダーに</span></div></div>`+
+        `<div class="hm-card"><div class="e">やること<span>頼まれた・引き受けた発言から</span></div>`+
+        `<div class="hm-td"><i></i><div>見積書は来週の金曜までに<small>田中さん ・ ${MDE(FRI)}まで</small></div><span class="hm-ghost">＋ 足す</span></div>`+
+        `<div class="hm-td"><i class="on"></i><div>議事録をチームに共有する<small>自分 ・ 今日まで</small></div><span></span></div>`+
+        `<div class="hm-td"><i></i><div>先方への日程確認は私の方でしておきます<small>自分</small></div><span class="hm-ghost">＋ 足す</span></div>`+
+        `<div class="hm-note">期限の前の日と当日の朝に知らせます</div></div>`+
+        `<div class="hm-btns"><span class="act">議事録を送る</span><span class="hm-ghost">全文を見る</span></div>`+
+        `<div class="hm-two"><div class="hm-card"><div class="e">預かった通知</div><b>6 件</b>山本さん 2 ・ 総務 2 ・ 佐々木さん 2</div><div class="hm-card"><div class="e">次の予定</div><b>15:00</b>東和ビルで打ち合わせ ・ あと 3 時間 56 分</div></div>`;
       case 'bul': return `<div class="hm-card"><div class="e">${esc(b[1])}${b[2]?`<span>${esc(b[2])}</span>`:''}</div>${b[3].map(([a,c])=>`<div class="hm-row" style="grid-template-columns:1fr auto"><span>${esc(a)}</span><span class="sd">${esc(c)}</span></div>`).join('')}</div>`;
       // 会議中：終わりまでの残りを大きく、開始〜終了のどこにいるかを棒で(アプリと同じ)
       case 'el': return `<div class="hm-el"><div class="nm">${esc(b[1])}</div><div class="l"><span>終わりまで あと</span><b>${b[4]}</b><span>分</span></div>`+
@@ -899,7 +966,7 @@ footer{margin-top:72px;padding-top:24px;border-top:1px solid var(--line);display
   const ICON={'天気':'☀','乗換案内':'⇄','メール':'✉','カレンダー':'31','ニュース':'N','チャット':'…','音楽':'♪','メモ':'✎','ビデオ会議':'▶','ファイル':'▤','録音':'●','経費精算':'¥','やること':'✓','勤怠':'⏱','マップ':'⌖'};
   function inner(k){
     const s=S[k];
-    return `<div class="dbody">`+s.blocks.map(block).join('')+
+    return `<div class="dbody"><div class="dscroll"><div class="dsin">`+s.blocks.map(block).join('')+`</div></div>`+
       `<div class="hm-dock">${s.dock.map(d=>`<div><i>${esc(ICON[d]||d[0])}</i>${esc(d)}</div>`).join('')}</div>`+
       `<div class="hm-why">「${esc(s.label)}」と判断：${esc(s.why)}</div></div>`;
   }
@@ -908,6 +975,16 @@ footer{margin-top:72px;padding-top:24px;border-top:1px solid var(--line);display
     return `<div class="glowb" style="--g:${s.glow}"></div><div class="sbar"><span data-clock>${s.clock}</span><span>●●●</span></div>`+
       `<span class="chip"><i></i><span data-chip>${esc(s.label)}</span></span>`+inner(k);
   }
+  function fit(root){
+    root.querySelectorAll('.dscroll').forEach(box=>{
+      const inn=box.firstElementChild; if(!inn) return;
+      inn.classList.remove('go');
+      const d=inn.scrollHeight-box.clientHeight;
+      if(d>4&&!reduced){ inn.style.setProperty('--d',`-${d+6}px`); inn.style.setProperty('--t',`${Math.max(4,d/18)}s`); inn.classList.add('go'); }
+    });
+  }
+  const fitAll=()=>fit(document);
+  window.addEventListener('load',fitAll); window.addEventListener('resize',fitAll); if(document.fonts) document.fonts.ready.then(fitAll);
   // 小さい画面：各ステップの下に、その状況のホームを置く
   document.querySelectorAll('.step').forEach(st=>{
     const m=st.querySelector('.mini'); if(!m) return;
@@ -919,17 +996,17 @@ footer{margin-top:72px;padding-top:24px;border-top:1px solid var(--line);display
   function show(k){
     if(!scr||k===cur) return;
     const first=cur===null; cur=k; const s=S[k];
-    if(first){ scr.innerHTML=frame(k); return; }
+    if(first){ scr.innerHTML=frame(k); fit(scr); return; }
     scr.querySelector('.glowb').style.setProperty('--g',s.glow);
     scr.querySelector('[data-clock]').textContent=s.clock;
     scr.querySelector('[data-chip]').textContent=s.label;
     const body=scr.querySelector('.dbody');
-    if(reduced){ body.outerHTML=inner(k); return; }
+    if(reduced){ body.outerHTML=inner(k); fit(scr); return; }
     body.classList.add('out');
     clearTimeout(swapT);
     swapT=setTimeout(()=>{
       const b=scr.querySelector('.dbody'); b.outerHTML=inner(k);
-      const nb=scr.querySelector('.dbody'); nb.classList.add('out');
+      const nb=scr.querySelector('.dbody'); nb.classList.add('out'); fit(scr);
       requestAnimationFrame(()=>requestAnimationFrame(()=>nb.classList.remove('out')));
     },420);
   }
@@ -937,7 +1014,7 @@ footer{margin-top:72px;padding-top:24px;border-top:1px solid var(--line);display
   const steps=[...document.querySelectorAll('.step')];
   // 背景の光の色(セクションごと)。1 日の利用イメージの中は、スマホと同じ状況の色
   const SEC={hero:['#c98f4e','#3a2f5e'],try:['#c98f4e','#3a2f5e'],read:['#4d6fa8','#2a2f5e'],learn:['#3f8c80','#2a3f52'],ai:['#5e4f9e','#2a3f66'],trust:['#4d6fa8','#3a2f5e'],value:['#b8694c','#3a2f5e'],build:['#c98f4e','#3a2f5e'],meet:['#5e4f9e','#2a2f5e']};
-  const G2={morning:'#3a2f5e',commute:'#24345e',meeting:'#3a2a5e',gap:'#1f3d44',evening:'#4a2a3a'};
+  const G2={aftermeet:'#5e3a6e',morning:'#3a2f5e',commute:'#24345e',meeting:'#3a2a5e',gap:'#1f3d44',evening:'#4a2a3a'};
   const fx=document.querySelector('.bgfx');
   const setBg=(a,b)=>{ if(fx){ fx.style.setProperty('--g1',a); fx.style.setProperty('--g2',b); } };
   const secs=[document.querySelector('.hero'),...document.querySelectorAll('section[id]')];
